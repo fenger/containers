@@ -1,0 +1,64 @@
+version: '3'
+services:
+  kafka1:
+    image: docker.io/bitnami/kafka:3.5.1
+    container_name: kafka1
+    ports:
+      - "19092:9092"
+      - "19093:9093"
+    environment:
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_KRAFT_CLUSTER_ID: lJQ9at6lQ02qoo8uerWjgA
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://kafka1:9092,CONTROLLER://kafka1:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://10.128.106.94:19092
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: '1@kafka1:9093,2@kafka2:9093,3@kafka3:9093'
+      KAFKA_CFG_PROCESS_ROLES: 'broker,controller'
+    volumes:
+      - "kafka_data_1:/bitnami"
+      - "/etc/localtime:/etc/localtime:ro"
+  kafka2:
+    image: docker.io/bitnami/kafka:3.5.1
+    container_name: kafka2
+    ports:
+      - "29092:9092"
+      - "29093:9093"
+    environment:
+      KAFKA_CFG_NODE_ID: 2
+      KAFKA_KRAFT_CLUSTER_ID: lJQ9at6lQ02qoo8uerWjgA
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://kafka2:9092,CONTROLLER://kafka2:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://10.128.106.94:29092
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: '1@kafka1:9093,2@kafka2:9093,3@kafka3:9093'
+      KAFKA_CFG_PROCESS_ROLES: 'broker,controller'
+    volumes:
+      - "kafka_data_2:/bitnami"
+      - "/etc/localtime:/etc/localtime:ro"
+  kafka3:
+    image: docker.io/bitnami/kafka:3.5.1
+    container_name: kafka3
+    ports:
+      - "39092:9092"
+      - "39093:9093"
+    environment:
+      KAFKA_CFG_NODE_ID: 3
+      KAFKA_KRAFT_CLUSTER_ID: lJQ9at6lQ02qoo8uerWjgA
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://kafka3:9092,CONTROLLER://kafka3:9093
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://10.128.106.94:39092
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: '1@kafka1:9093,2@kafka2:9093,3@kafka3:9093'
+      KAFKA_CFG_PROCESS_ROLES: 'broker,controller'
+    volumes:
+      - "kafka_data_3:/bitnami"
+      - "/etc/localtime:/etc/localtime:ro"
+
+volumes:
+  kafka_data_1:
+    driver: local
+  kafka_data_2:
+    driver: local
+  kafka_data_3:
+    driver: local
